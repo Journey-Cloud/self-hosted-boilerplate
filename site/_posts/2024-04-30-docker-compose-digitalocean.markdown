@@ -6,7 +6,7 @@ date: 2024-04-30 12:44:40 +0800
 categories: docker compose easy
 ---
 
-Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose on DigitalOcean. This guide is designed to be easy to follow, with an estimated setup time of just 30 minutes.
+Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose on DigitalOcean. This guide is designed to be easy to follow, with an estimated setup time of just 45 minutes.
 
 Before we dive in, make sure you have the following:
 * DigitalOcean account
@@ -161,32 +161,197 @@ root-journey-sync-self-hosted-service-1   journeycloud/journey-sync-self-hosted 
 root-journey-typesense-service-1          typesense/typesense:26.0                "/opt/typesense-serv…"   journey-typesense-service          46 seconds ago   Up 44 seconds   8108/tcp
 ```
 
-# Install Nginx
+# Install Nginx & Certbot
 
+1. Install Nginx. When prompted, type `Y` and press `ENTER` to continue with the installation.
+```sh
+sudo apt install nginx
+```
 
-<!-- You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+2. At the end of the installation process, Ubuntu starts Nginx. The web server should already be up and running. We can check the service is running by typing:
+```sh
+systemctl status nginx
+```
 
-Jekyll requires blog post files to be named according to the following format:
+3. The output should show that nginx is active.
+```
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-05-01 06:14:06 UTC; 50s ago
+       Docs: man:nginx(8)
+    Process: 10622 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SU>
+    Process: 10623 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 10625 (nginx)
+      Tasks: 3 (limit: 4658)
+     Memory: 2.4M (peak: 2.6M)
+        CPU: 17ms
+     CGroup: /system.slice/nginx.service
+             ├─10625 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─10626 "nginx: worker process"
+             └─10627 "nginx: worker process"
+```
 
-`YEAR-MONTH-DAY-title.MARKUP`
+4. In the Droplet dashboard, you can retrieve the public IP address or domain.
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean5.png)
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+5. Paste the IP address or your domain into the browser and you should see that nginx web server is successfully installed and working.
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean6.png)
 
-Jekyll also offers powerful support for code snippets:
+6. Skip this step if you have already setup a domain that is directed to this Droplet. To direct the domain to the Droplet, refer to this [link](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/). Once done, go back to step 4 & 5.
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean7.png)
+In the above example, we setup our domain by adding `A` record to the IP address of the Droplet. For the name, you can enter either `@` if you would like the root of the domain or `name` for subdomain.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+    | Name    | Your Domain will look like this |
+    |---------|---------------------------------|
+    | @       | johnappleseed.com               |
+    | journal | journal.johnappleseed.com       |
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+7. Open text editor to configure nginx further. Replace `<domain>` with your domain.
+```sh
+sudo nano /etc/nginx/sites-available/<domain>
+```
+Example:
+```sh
+sudo nano /etc/nginx/sites-available/johnappleseed.com
+```
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/ -->
+8. Paste this into the file. Replace `<domain>` with your domain. Then enter Control+X `^X`. Enter `Y` and press `ENTER` to save.
+```conf
+server {
+  listen 80;
+  listen [::]:80;
+  server_name <domain>;
+  location / {
+        proxy_pass http://localhost:8080;
+  }
+}
+```
+
+9. Replace `<domain>` with your domain.
+```sh
+sudo ln -s /etc/nginx/sites-available/<domain> /etc/nginx/sites-enabled/
+```
+10. Configure nginx configuration.
+```sh
+nano /etc/nginx/nginx.conf
+```
+
+11. Insert these lines of code `client_max_body_size 100M;` and `proxy_set_header X-Forwarded-For $remote_addr;` into `http` section. Then enter Control+X `^X`. Enter `Y` and press `ENTER` to save.
+```conf
+http {
+  ##
+  # Basic Settings
+  ##
+  client_max_body_size 100M;
+  proxy_set_header X-Forwarded-For $remote_addr;
+```
+
+12. Check if the nginx configuration is properly set.
+```sh
+nginx -t
+```
+
+13. You should see this output.
+```
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+14. Journey clients require encrypted HTTPS on web servers. We will use Certbot to obtain a free SSL certificate for Nginx on Ubuntu and set up your certificate to renew automatically. To begin, install cerbot and its dependencies. When prompted, type `Y` and press `ENTER` to continue with the installation.
+```sh
+apt install certbot python3-certbot-nginx
+```
+
+15. Execute certbot. Replace `<domain>` with your domain.
+```sh
+sudo certbot --nginx -d <domain>
+```
+
+16. Enter your email address.
+
+17. Type `Y` and press `ENTER` to continue with the installation.
+
+18. You should see this output.
+```
+Deploying certificate
+Successfully deployed certificate for <domain> to /etc/nginx/sites-enabled/<domain>
+Congratulations! You have successfully enabled HTTPS on https://<domain>
+```
+
+19.  Let’s Encrypt’s certificates are only valid for ninety days. This is to encourage users to automate their certificate renewal process. The certbot package we installed takes care of this for us by adding a systemd timer that will run twice a day and automatically renew any certificate that’s within thirty days of expiration. You can query the status of the timer with systemctl:
+```sh
+sudo systemctl status certbot.timer
+```
+
+20. Output:
+```
+● certbot.timer - Run certbot twice daily
+     Loaded: loaded (/usr/lib/systemd/system/certbot.timer; enabled; preset: enabled)
+     Active: active (waiting) since Wed 2024-05-01 06:46:56 UTC; 43min ago
+    Trigger: Wed 2024-05-01 19:15:56 UTC; 11h left
+   Triggers: ● certbot.service
+```
+
+21. To test the renewal process, you can do a dry run with certbot. 
+```sh
+sudo certbot renew --dry-run
+```
+
+22. If you see no errors, you’re all set. When necessary, Certbot will renew your certificates and reload Nginx to pick up the changes. If the automated renewal process ever fails, Let’s Encrypt will send a message to the email you specified, warning you when your certificate is about to expire.
+```
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations, all simulated renewals succeeded: 
+  /etc/letsencrypt/live/<domain>/fullchain.pem (success)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+23. Reload nginx.
+```sh
+sudo systemctl restart nginx
+```
+
+24. Enter your domain into the browser. You should see Journey self-hosted server is installed. 
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean8.png)
+
+25. Login to admin panel by going to `https://<domain>/admin`.
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean9.png)
+
+2261. To locate your credentials, go back to the terminal and find the process of Journey web server.
+```sh
+docker ps -a
+```
+
+27. Find the process ID of the web server on the same line with `npm run launch`. In this example, the process ID is `5f9ae2280304`.
+![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean10.png)
+
+28. Read the logs of the web server. Use the process ID that you have found in step 22.
+```sh
+docker logs <processID>
+```
+
+29.  Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
+
+30. Done! You are in the admin dashboard.
+
+31. Change the admin password. You may also add new user.
+
+32. Follow the instructions [here](https://help.journey.cloud/en/article/how-to-add-a-self-hosted-journey-cloud-sync-1ty6l1i/) to add a new sync drive.
+
+# Update Journey Docker images
+1. Journey self-hosted is [updated](https://hub.docker.com/r/journeycloud/journey-sync-self-hosted) from time to time. To update, go to the folder where `docker-compose.yml` is located.
+```sh
+cd ~/compose
+```
+
+2. Pull the images.
+```sh
+docker images pull
+```
+
+3. Load the new images.
+```sh
+docker compose up -d
+```
 
 ## Recommended Resources:
 * https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
