@@ -23,7 +23,7 @@ Before we dive in, make sure you have the following:
 
 4. Select your preferred Droplet type. For this tutorial, we'll choose "Basic" > "Regular (Disk type: SSD)" with specs "4 GB / 2 CPUs, 80 GB SSD Disk, 4 TB transfer".
 
-5. We strongly recommend enabling the "Enable automated backup plan".
+5. We strongly recommend that you turn on the "Enable automated backup plan."
 
 6. For authentication, choose "SSH key" instead of "Password". Follow the instructions to set up a new SSH key. 
 > Note: Weak passwords can compromise security, so it's best to use SSH keys for authentication.
@@ -62,12 +62,12 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 ```
 
-7. This will also update our package database with the Docker packages from the newly added repo. Make sure you are about to install from the Docker repo instead of the default Ubuntu repo.
+7. This will also update your package database with the Docker packages from the newly added repo. Make sure you are about to install from the Docker repo instead of the default Ubuntu repo.
 ```sh
 apt-cache policy docker-ce
 ```
 
-8. You’ll see output like this, although the version number for Docker may be different. Notice that docker-ce is not installed, but the candidate for installation is from the Docker repository for Ubuntu 20.04 (focal).
+8. You'll see output similar to this, although the version number for Docker might vary. Notice that docker-ce is not installed, yet the candidate for installation originates from the Docker repository for Ubuntu 20.04 (focal).
 ```
 docker-ce:
   Installed: (none)
@@ -102,14 +102,14 @@ TriggeredBy: ● docker.socket
              └─3690 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 
-12. Navigate to your user directory and create a folder named "compose". Enter this folder.
+12. Navigate to your user directory and create a folder named `compose`. Change directory to this folder.
 ```sh
 cd ~/
 mkdir compose
 cd compose
 ```
 
-13. Visit the GitHub repository [here](https://github.com/Journey-Cloud/self-hosted-boilerplate/blob/main/docker-compose/docker-compose.yml) and locate the docker-compose.yml file. Copy its contents and paste them into a text editor like PC Notepad. Within the copied content, locate and modify the following fields: 
+13. VVisit the GitHub repository [here](https://github.com/Journey-Cloud/self-hosted-boilerplate/blob/main/docker-compose/docker-compose.yml) and locate the `docker-compose.yml` file. Copy its contents and paste them into a text editor like Notepad or VS Code. Within the copied content, locate and modify the following fields: 
   * DOMAIN: Replace both `journey-sync-self-hosted-service` & `journey-sync-self-hosted-media` services of this field with your desired domain name. Example: `johnappleseed.com`
   * SIGNED: Change this field to a unique value.
   * ADMIN_JS_COOKIE_PASSWORD: Modify this field with a unique password.
@@ -131,7 +131,7 @@ docker compose pull
 docker compose up -d
 ```
 
-18. You should see this.
+18. The output should show this:
 ```
 [+] Running 10/10
  ✔ Network root_default                               Created                                               0.1s 
@@ -168,7 +168,7 @@ root-journey-typesense-service-1          typesense/typesense:26.0              
 sudo apt install nginx
 ```
 
-2. At the end of the installation process, Ubuntu starts Nginx. The web server should already be up and running. We can check the service is running by typing:
+2. At the end of the installation process, Ubuntu starts Nginx. The web server should already be up and running. You can verify that the service is running by typing:
 ```sh
 systemctl status nginx
 ```
@@ -194,7 +194,7 @@ systemctl status nginx
 4. In the Droplet dashboard, you can retrieve the public IP address or domain.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean5.png)
 
-5. Paste the IP address or your domain into the browser and you should see that nginx web server is successfully installed and working.
+5. Paste the IP address or your domain into the browser, and you should see that the Nginx web server is successfully installed and working.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean6.png)
 
 6. Skip this step if you have already setup a domain that is directed to this Droplet. To direct the domain to the Droplet, refer to this [link](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/). Once done, go back to step 4 & 5.
@@ -206,7 +206,7 @@ In the above example, we setup our domain by adding `A` record to the IP address
     | @       | johnappleseed.com               |
     | journal | journal.johnappleseed.com       |
 
-7. Open text editor to configure nginx further. Replace `<domain>` with your domain.
+7. Open a text editor to configure nginx further. Replace `<domain>` with your domain.
 ```sh
 sudo nano /etc/nginx/sites-available/<domain>
 ```
@@ -215,7 +215,7 @@ Example:
 sudo nano /etc/nginx/sites-available/johnappleseed.com
 ```
 
-8. Paste this into the file. Replace `<domain>` with your domain. Then enter Control+X `^X`. Enter `Y` and press `ENTER` to save.
+8. Paste the text shown below into the file. Replace `<domain>` with your domain. Then enter Control+X `^X`. Enter `Y` and press `ENTER` to save.
 ```conf
 server {
   listen 80;
@@ -278,12 +278,12 @@ Successfully deployed certificate for <domain> to /etc/nginx/sites-enabled/<doma
 Congratulations! You have successfully enabled HTTPS on https://<domain>
 ```
 
-19.  Let’s Encrypt’s certificates are only valid for ninety days. This is to encourage users to automate their certificate renewal process. The certbot package we installed takes care of this for us by adding a systemd timer that will run twice a day and automatically renew any certificate that’s within thirty days of expiration. You can query the status of the timer with systemctl:
+19.  "Let’s Encrypt" certificates are only valid for ninety days. This is designed to encourage users to automate their certificate renewal process. The certbot package handles this by adding a systemd timer that runs twice a day and automatically renews any certificate that’s within thirty days of expiration. You can query the status of the timer with `systemctl`:
 ```sh
 sudo systemctl status certbot.timer
 ```
 
-20. Output:
+20. The output should show this:
 ```
 ● certbot.timer - Run certbot twice daily
      Loaded: loaded (/usr/lib/systemd/system/certbot.timer; enabled; preset: enabled)
@@ -292,12 +292,12 @@ sudo systemctl status certbot.timer
    Triggers: ● certbot.service
 ```
 
-21. To test the renewal process, you can do a dry run with certbot. 
+21. To test the renewal process, you can do a dry run with certbot.
 ```sh
 sudo certbot renew --dry-run
 ```
 
-22. If you see no errors, you’re all set. When necessary, Certbot will renew your certificates and reload Nginx to pick up the changes. If the automated renewal process ever fails, Let’s Encrypt will send a message to the email you specified, warning you when your certificate is about to expire.
+22. If you see no errors, you’re all set. When necessary, Certbot will renew your certificates and reload Nginx to pick up the changes. If the automated renewal process ever fails, "Let’s Encrypt" will send a message to the email you specified, warning you when your certificate is about to expire.
 ```
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Congratulations, all simulated renewals succeeded: 
@@ -310,21 +310,21 @@ Congratulations, all simulated renewals succeeded:
 sudo systemctl restart nginx
 ```
 
-24. Enter your domain into the browser. You should see Journey self-hosted server is installed. 
+24. Enter your domain into the browser. You should see that the Journey self-hosted server is installed.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean8.png)
 
-25. Login to admin panel by going to `https://<domain>/admin`.
+25. Log in to the admin panel by going to `https://<domain>/admin`.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean9.png)
 
-2261. To locate your credentials, go back to the terminal and find the process of Journey web server.
+2261. To locate your credentials, open the terminal and find the process of the Journey web server.
 ```sh
 docker ps -a
 ```
 
-27. Find the process ID of the web server on the same line with `npm run launch`. In this example, the process ID is `5f9ae2280304`.
+27. Find the container ID of the web server on the same line with `npm run launch`. In this example, the container ID is `5f9ae2280304`.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean10.png)
 
-28. Read the logs of the web server. Use the process ID that you have found in step 22.
+28. Read the logs of the web server using the container ID found in step 22.
 ```sh
 docker logs <processID>
 ```
