@@ -326,7 +326,7 @@ docker ps -a
 
 28. Read the logs of the web server using the container ID found in step 22.
 ```sh
-docker logs <processID>
+docker logs <container ID>
 ```
 
 29.  Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
