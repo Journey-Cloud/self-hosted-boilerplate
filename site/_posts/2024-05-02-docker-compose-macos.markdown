@@ -10,7 +10,7 @@ Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose 
 
 Before we dive in, make sure you have the following:
 * Macintosh E.g. Mac Studio
-* Domain
+* Dynamic DNS or ngrok account
 
 ## Install Docker Desktop
 1. Go to [Docker](https://www.docker.com/products/docker-desktop/) to download the MacOS App. Choose between Intel chip and Apple chip depending on your Mac.
@@ -32,6 +32,7 @@ Before we dive in, make sure you have the following:
 
 ## Install Homebrew
 1. Open "Terminal" app from "LaunchPad".
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac1.png)
 
 2. Install Homebrew. Input your password when prompted and press `ENTER`. Press `ENTER` again to install command line tools.
 ```sh
@@ -68,7 +69,7 @@ ngrok http --domain=<random>.ngrok-free.app 8080
 2. Save text file as `docker-compose.yml` in a designated directory. In this example, we save in `~/Documents/journey`.
 
 
-3. Go to the designated directory and list the files in the folder.
+3. Go to the designated directory and list the files in the fol der.
 ```sh
 cd ~/Documents/journey
 ls

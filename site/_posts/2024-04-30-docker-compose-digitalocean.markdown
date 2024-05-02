@@ -329,7 +329,7 @@ docker ps -a
 docker logs <container ID>
 ```
 
-29.  Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
+29. Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
 
 30. Done! You are in the admin dashboard.
 
