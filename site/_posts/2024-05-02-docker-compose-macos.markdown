@@ -19,7 +19,7 @@ Before we dive in, make sure you have the following:
 
 3. Open "Docker" app.
 
-4. Accept the terms. Select "Use recommended seetings" > "Finish".
+4. Accept the terms. Select "Use recommended settings" > "Finish".
 
 5. Click on "Continue without signing in".
 
