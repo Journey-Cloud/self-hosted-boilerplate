@@ -15,20 +15,20 @@
 <h3 align="center">Journey Self-Hosted Sync Boilerplates</h3>
 
   <p align="center">
-    Journey® is a versatile journal and diary application available on both mobile and web platforms. Experience the flexibility to store your journal entries in Journey Cloud sync, Google Drive, and/or your own Self-hosted Journey Sync Drive. This repository offers boilerplate templates for setting up your Self-hosted Journey Sync Drive. Feel free to fork this project if you wish to contribute boilerplates or website documentation.
+    Journey® is a versatile journal and diary application available on both mobile and web platforms. Experience the flexibility to store your journal entries in Journey Cloud sync, Google Drive, and/or your own Self-hosted Journey Sync Drive. This repository offers boilerplate templates for setting up your Self-hosted Journey Sync Drive.
     <br />
     <br />
     Source Code (Coming soon)
     ·
     <a href="https://hub.docker.com/r/journeycloud/journey-sync-self-hosted">Docker Image</a>
     ·
-    <a href="https://journey-cloud.github.io/self-hosted-boilerplate">Guide</a>
+    <a href="https://journey-cloud.github.io/self-hosted-boilerplate">Guides</a>
+    ·
+    <a href="https://forum.journey.cloud/t/self-hosted">Forum</a>
     ·
     <a href="https://github.com/Journey-Cloud/self-hosted-boilerplate/issues">Report Bug</a>
     ·
     <a href="https://github.com/Journey-Cloud/self-hosted-boilerplate/issues">Request Feature</a>
-    ·
-    <a href="https://forum.journey.cloud/t/self-hosted">Forum</a>
   </p>
 </div>
 
@@ -56,6 +56,20 @@ The boilerplates found in this repository are distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+## Contributing
+We welcome contributions from everyone, whether you're fixing a typo, adding a feature, or suggesting improvements. By participating, you're helping to make this project even better.
+
+Ways to Contribute
+* **Reporting Issues**: If you encounter a bug or have a feature request, please open an issue on GitHub. Be sure to include as much detail as possible, such as steps to reproduce the issue or examples of expected behavior.
+* **Feature Suggestions**: Have an idea for a new feature or improvement? Share it with us by opening an issue and describing the functionality you'd like to see. We'll review your suggestion and discuss it with the community.
+* **Code Contributions**: If you're comfortable with coding, feel free to fork the repository, make your changes, and submit a pull request. Make sure to follow our contribution guidelines and adhere to our coding standards.
+* **Documentation**: Good documentation is crucial for a successful project. If you notice any gaps or errors in our documentation, please let us know or submit a pull request with your proposed changes.
+* **Testing**: Help us ensure the reliability and stability of our project by testing new features, bug fixes, or changes in different environments. You can provide feedback on your testing experience in GitHub issues or pull requests.
+* **Spread the Word**: Share your experience with our project on social media, forums, or developer communities. The more people who know about it, the more potential contributors we'll attract.
+* **Funding**: You can support us financially by purchasing [Membership](https://journey.cloud/membership). Your contributions help cover development, and other project-related costs, ensuring its continued growth and sustainability.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

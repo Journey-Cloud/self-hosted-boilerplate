@@ -177,6 +177,7 @@ span[data-pullquote]:before {
 a {
   color: $blue;
 	cursor: pointer;
+  text-decoration: none;
   &:hover, &:active {
     color: $blue;
   }
@@ -309,9 +310,6 @@ p > img {
   font-size: 28px;
   text-align: left;
 
-  a {
-    text-decoration: none;
-  }
   @include mobile {
     text-align: center;
   }
@@ -688,7 +686,6 @@ Modules - reusable parts of our design
   background-color: #4CAF50;
   border-radius: 50px;
   color: #fff;
-  text-decoration: none;
 }
 
 .pagination a, .pagination span {
@@ -1127,6 +1124,11 @@ div.highlight {
   border-radius: 4px;
 }
 
+.entry {
+  a {
+    text-decoration: underline;
+  }
+}
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 //@import "highlights";
