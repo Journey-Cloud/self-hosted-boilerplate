@@ -18,7 +18,7 @@
     Journey® is a versatile journal and diary application available on both mobile and web platforms. Experience the flexibility to store your journal entries in Journey Cloud sync, Google Drive, and/or your own Self-hosted Journey Sync Drive. This repository offers boilerplate templates for setting up your Self-hosted Journey Sync Drive.
     <br />
     <br />
-    Source Code (Coming soon)
+    <a href="https://github.com/Journey-Cloud/self-hosted">Source Code</a> (Coming Soon)
     ·
     <a href="https://hub.docker.com/r/journeycloud/journey-sync-self-hosted">Docker Image</a>
     ·
@@ -37,7 +37,7 @@
 
 The objective of this project is to provide users with a self-hosted variant of Journey Cloud Sync. It prioritizes data privacy and security, empowering users with full control over their information.
 
-![Product Name Screen Shot](https://journey-cloud.github.io/self-hosted-boilerplate/images/posts/2024-04-30/docker-compose-digitalocean9.png)
+![Self-Hosted Journey Cloud Sync](https://journey-cloud.github.io/self-hosted-boilerplate/images/posts/2024-04-30/docker-compose-digitalocean9.png)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -46,7 +46,7 @@ The objective of this project is to provide users with a self-hosted variant of 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-See the image from [Docker Hub](https://hub.docker.com/r/journeycloud/journey-sync-self-hosted) to begin or follow the [guides](https://journey-cloud.github.io/self-hosted-boilerplate/) to setup.
+View the image from [Docker Hub](https://hub.docker.com/r/journeycloud/journey-sync-self-hosted) to begin or follow the [guides](https://journey-cloud.github.io/self-hosted-boilerplate/) to setup.
 
 
 <!-- LICENSE -->
