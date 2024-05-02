@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 
   line-height: 1.7;
-  margin: 1em 0 15px;
+  margin: 3em 0 15px;
   padding: 0;
   text-align: center;
 
@@ -176,7 +176,6 @@ span[data-pullquote]:before {
 
 a {
   color: $blue;
-  text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
     color: $blue;
@@ -263,13 +262,10 @@ p > img {
 //
 
 .wrapper-masthead {
-  margin-bottom: 25px;
+  margin: 25px 0;
 }
 
-.masthead {
-  padding: 20px 0;
-  border-bottom: 1px solid $lightGray;
-
+.masthead {  
   @include mobile {
     text-align: center;
   }
@@ -313,6 +309,9 @@ p > img {
   font-size: 28px;
   text-align: left;
 
+  a {
+    text-decoration: none;
+  }
   @include mobile {
     text-align: center;
   }
@@ -326,6 +325,12 @@ p > img {
   @include mobile {
     margin: 3px 0;
   }
+}
+
+.site-container {
+  background: #f3f3f3;
+  border-radius: 16px;
+  padding: 24px;
 }
 
 nav {
@@ -683,6 +688,7 @@ Modules - reusable parts of our design
   background-color: #4CAF50;
   border-radius: 50px;
   color: #fff;
+  text-decoration: none;
 }
 
 .pagination a, .pagination span {
@@ -1117,7 +1123,7 @@ Modules - reusable parts of our design
 }
 
 div.highlight {
-  margin-bottom: 1em;
+  margin: 1em 0 2em 0;
   border-radius: 4px;
 }
 

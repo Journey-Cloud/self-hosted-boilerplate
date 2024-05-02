@@ -12,7 +12,7 @@ Before we dive in, make sure you have the following:
 * DigitalOcean account
 * Domain (Recommended)
 
-# Create a Droplet
+## Create a Droplet
 1. Log in to your DigitalOcean dashboard and navigate to "Create" > "Droplets".
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean1.png)
 
@@ -35,7 +35,7 @@ Before we dive in, make sure you have the following:
 9. Once your Droplet is created, you'll see it listed in your dashboard. It should look like this:
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean2.png)
 
-# Install Docker
+## Install Docker
 1. Click on the "Launch Console" button located at the top right corner of the dashboard.
 ![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean3.png)
 
@@ -109,7 +109,7 @@ mkdir compose
 cd compose
 ```
 
-13. VVisit the GitHub repository [here](https://github.com/Journey-Cloud/self-hosted-boilerplate/blob/main/docker-compose/docker-compose.yml) and locate the `docker-compose.yml` file. Copy its contents and paste them into a text editor like Notepad or VS Code. Within the copied content, locate and modify the following fields: 
+13. Visit the GitHub repository [here](https://github.com/Journey-Cloud/self-hosted-boilerplate/blob/main/docker-compose/docker-compose.yml) and locate the `docker-compose.yml` file. Copy its contents and paste them into a text editor like Notepad or VS Code. Within the copied content, locate and modify the following fields: 
   * DOMAIN: Replace both `journey-sync-self-hosted-service` & `journey-sync-self-hosted-media` services of this field with your desired domain name. Example: `johnappleseed.com`
   * SIGNED: Change this field to a unique value.
   * ADMIN_JS_COOKIE_PASSWORD: Modify this field with a unique password.
@@ -161,7 +161,7 @@ root-journey-sync-self-hosted-service-1   journeycloud/journey-sync-self-hosted 
 root-journey-typesense-service-1          typesense/typesense:26.0                "/opt/typesense-serv…"   journey-typesense-service          46 seconds ago   Up 44 seconds   8108/tcp
 ```
 
-# Install Nginx & Certbot
+## Install Nginx & Certbot
 
 1. Install Nginx. When prompted, type `Y` and press `ENTER` to continue with the installation.
 ```sh
@@ -337,7 +337,7 @@ docker logs <container ID>
 
 32. Follow the instructions [here](https://help.journey.cloud/en/article/how-to-add-a-self-hosted-journey-cloud-sync-1ty6l1i/) to add a new sync drive.
 
-# Update Journey Docker images
+## Update Journey Docker images
 1. Journey self-hosted is [updated](https://hub.docker.com/r/journeycloud/journey-sync-self-hosted) from time to time. To update, go to the folder where `docker-compose.yml` is located.
 ```sh
 cd ~/compose
@@ -353,8 +353,8 @@ docker images pull
 docker compose up -d
 ```
 
-## Recommended Resources:
-* https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
-* https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
-* https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
-* https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04
+## Recommended Resources
+* [https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04)
+* [https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04)
+* [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+* [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
