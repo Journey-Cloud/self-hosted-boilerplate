@@ -6,11 +6,11 @@ date: 2024-05-02 00:00:00 +0800
 categories: docker compose easy
 ---
 
-Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose on MacOS Sonoma 14. This guide is designed to be easy to follow, with an estimated setup time of just 45 minutes.
+Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose on MacOS Sonoma 14. This guide is designed to be easy to follow, with an estimated setup time of just 30 minutes.
 
 Before we dive in, make sure you have the following:
 * Macintosh E.g. Mac Studio
-* Dynamic DNS or ngrok account
+* Ngrok account
 
 ## Install Docker Desktop
 1. Go to [Docker](https://www.docker.com/products/docker-desktop/) to download the MacOS App. Choose between Intel chip and Apple chip depending on your Mac.
@@ -26,7 +26,7 @@ Before we dive in, make sure you have the following:
 6. Click on the red traffic light button to close the window. You should still see that the Docker app is running in the background.
 
 ## Sign up for Dynamic DNS service
-1. In this example, we use "ngrok". Sign up a free account in [ngrok](https://ngrok.com).
+1. In this example, we use Ngrok. Sign up a free account in [ngrok](https://ngrok.com).
 
 2. Head over to [ngrok](https://dashboard.ngrok.com/get-started/setup/macos) MacOS setup page.
 
@@ -65,9 +65,11 @@ ngrok http --domain=<random>.ngrok-free.app 8080
   * SIGNED: Change this field to a unique value.
   * ADMIN_JS_COOKIE_PASSWORD: Modify this field with a unique password.
   > Ensure that "Make Plain Text" is selected under "Format" menu in TextEdit app.
+  
+  ![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac2.png)
 
 2. Save text file as `docker-compose.yml` in a designated directory. In this example, we save in `~/Documents/journey`.
-
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac3.png)
 
 3. Go to the designated directory and list the files in the fol der.
 ```sh
@@ -91,22 +93,29 @@ docker compose pull
 docker compose up -d
 ```
 
-7. Go to `<random>.ngrok-free.app` in your browser. You should see that the Journey self-hosted server is installed.
+7. Go to `locahost:8080` in your browser. You should see that the Journey self-hosted server is installed.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac4.png)
 
-8. Log in to the admin panel by going to `https://<random>.ngrok-free.app/admin`.
-![Image]({{ site.baseurl }}/images/posts/2024-04-30/docker-compose-digitalocean9.png)
+8. Go to `<random>.ngrok-free.app` in your browser. You should see that the Journey self-hosted server is installed.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac5.png)
 
-9. Now, you need to locate your credentials. On the menu, click "Go to the dashboard" to open Docker dashboard.
+9. Log in to the admin panel by going to `https://<random>.ngrok-free.app/admin`.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac6.png)
 
-10. In "Containers" tab, expand "journey" project. Click on the service with name that starts with `journey-sync-self-hosted-service-` running on port `8080`.
+10. Now, you need to locate your credentials. On the menu, click "Go to the dashboard" to open Docker dashboard.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac7.png)
 
-11. Scroll the logs to retrive the user name and password. Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
+11. In "Containers" tab, expand "journey" project. Click on the service with name that starts with `journey-sync-self-hosted-service-` running on port `8080`.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac8.png)
 
-12. Done! You are in the admin dashboard.
+12. Scroll the logs to retrive the user name and password. Copy the user name and password into the admin login page. For OTP, use authenticator app such as Authy. Enter the secret code or scan the QR code.
+![Image]({{ site.baseurl }}/images/posts/2024-05-02/docker-compose-mac9.png)
 
-13. Change the admin password. You may also add new user.
+13. Done! You are in the admin dashboard.
 
-14. Follow the instructions [here](https://help.journey.cloud/en/article/how-to-add-a-self-hosted-journey-cloud-sync-1ty6l1i/) to add a new sync drive.
+14. Change the admin password. You may also add new user.
+
+15. Follow the instructions [here](https://help.journey.cloud/en/article/how-to-add-a-self-hosted-journey-cloud-sync-1ty6l1i/) to add a new sync drive.
 
 ## Update Journey Docker images
 1. Journey self-hosted is [updated](https://hub.docker.com/r/journeycloud/journey-sync-self-hosted) from time to time. To update, go to the folder where `docker-compose.yml` is located.
