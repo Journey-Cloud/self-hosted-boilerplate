@@ -2,7 +2,7 @@
 layout: post
 title: "Deploy using Docker Compose on DigitalOcean"
 author: Journey
-date: 2024-04-30 12:44:40 +0800
+date: 2024-04-30 00:00:00 +0800
 categories: docker compose easy
 ---
 
@@ -10,7 +10,7 @@ Welcome to our tutorial on hosting your Journey Sync Drive using Docker Compose 
 
 Before we dive in, make sure you have the following:
 * DigitalOcean account
-* Domain (Recommended)
+* Domain
 
 ## Create a Droplet
 1. Log in to your DigitalOcean dashboard and navigate to "Create" > "Droplets".
@@ -68,7 +68,7 @@ apt-cache policy docker-ce
 ```
 
 8. You'll see output similar to this, although the version number for Docker might vary. Notice that docker-ce is not installed, yet the candidate for installation originates from the Docker repository for Ubuntu 20.04 (focal).
-```
+```console
 docker-ce:
   Installed: (none)
   Candidate: 5:26.1.0-1~ubuntu.20.04~focal
@@ -88,7 +88,7 @@ sudo systemctl status docker
 ```
 
 11. The output should be similar to the following, showing that the service is active and running.
-```
+```console
 ● docker.service - Docker Application Container Engine
      Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; preset: enabled)
      Active: active (running) since Tue 2024-04-30 08:07:26 UTC; 2min 11s ago
@@ -132,7 +132,7 @@ docker compose up -d
 ```
 
 18. The output should show this:
-```
+```console
 [+] Running 10/10
  ✔ Network root_default                               Created                                               0.1s 
  ✔ Volume "root_journey-redis-volume"                 Created                                               0.0s 
@@ -152,7 +152,7 @@ docker compose ps -a
 ```
 
 20. The output should show that all of the 5 services are alive.
-```
+```console
 NAME                                      IMAGE                                   COMMAND                  SERVICE                            CREATED          STATUS          PORTS
 root-journey-mongodb-service-1            mongo:7.0                               "docker-entrypoint.s…"   journey-mongodb-service            46 seconds ago   Up 44 seconds   27017/tcp
 root-journey-redis-service-1              redis:7.2.4-alpine                      "docker-entrypoint.s…"   journey-redis-service              46 seconds ago   Up 44 seconds   6379/tcp
@@ -174,7 +174,7 @@ systemctl status nginx
 ```
 
 3. The output should show that nginx is active.
-```
+```console
 ● nginx.service - A high performance web server and a reverse proxy server
      Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
      Active: active (running) since Wed 2024-05-01 06:14:06 UTC; 50s ago
@@ -252,7 +252,7 @@ nginx -t
 ```
 
 13. You should see this output.
-```
+```console
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
@@ -272,7 +272,7 @@ sudo certbot --nginx -d <domain>
 17. Type `Y` and press `ENTER` to continue with the installation.
 
 18. You should see this output.
-```
+```console
 Deploying certificate
 Successfully deployed certificate for <domain> to /etc/nginx/sites-enabled/<domain>
 Congratulations! You have successfully enabled HTTPS on https://<domain>
@@ -284,7 +284,7 @@ sudo systemctl status certbot.timer
 ```
 
 20. The output should show this:
-```
+```console
 ● certbot.timer - Run certbot twice daily
      Loaded: loaded (/usr/lib/systemd/system/certbot.timer; enabled; preset: enabled)
      Active: active (waiting) since Wed 2024-05-01 06:46:56 UTC; 43min ago
@@ -298,7 +298,7 @@ sudo certbot renew --dry-run
 ```
 
 22. If you see no errors, you’re all set. When necessary, Certbot will renew your certificates and reload Nginx to pick up the changes. If the automated renewal process ever fails, "Let’s Encrypt" will send a message to the email you specified, warning you when your certificate is about to expire.
-```
+```console
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Congratulations, all simulated renewals succeeded: 
   /etc/letsencrypt/live/<domain>/fullchain.pem (success)
@@ -345,7 +345,7 @@ cd ~/compose
 
 2. Pull the images.
 ```sh
-docker images pull
+docker compose pull
 ```
 
 3. Load the new images.
