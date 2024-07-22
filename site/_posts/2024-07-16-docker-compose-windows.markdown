@@ -1,4 +1,11 @@
-# Welcome to Our Tutorial on Hosting Your Journey Sync Drive Using Docker Compose on Windows
+---
+layout: post
+title: "Deploy using Docker Compose on Windows"
+author: Journey
+date: 2024-07-16 00:00:00 +0800
+categories: docker compose easy
+---
+
 This guide is designed to be easy to follow, with an estimated setup time of just 30 minutes.
 
 ## Prerequisites
