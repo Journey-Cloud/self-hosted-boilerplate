@@ -1,0 +1,73 @@
+name: "your_service_name"
+
+services:
+  journey-sync-self-hosted-service:
+    image: journeycloud/journey-sync-self-hosted:0.1.0-alpha04
+    environment:
+      EXPRESS_SERVER_PORT: 7070 # Set Port to other one bc other services like nextcloud using it already
+      REDIS_PORT: 6379
+      DISABLE_SSL: NO
+      DOMAIN: mydomain.com
+      ROOT_MONGO_DB_URL: mongodb://root:password@journey-mongodb-service:27017
+      MONGO_DB_URL: mongodb://user:password@journey-mongodb-service:27017/journey
+      REDIS_URL: redis://journey-redis-service:6379
+      FS_PATH: /mnt/data
+      SIGNED: randomalphanumeric1
+      ADMIN_JS_COOKIE_PASSWORD: randomalphanumeric2
+      TYPESENSE_HOST: journey-typesense-service
+      TYPESENSE_PORT: 8108
+      TYPESENSE_PROTOCOL: http
+      TYPESENSE_API_KEY: xyz
+    entrypoint: 'npm run launch'
+    depends_on:
+      - journey-mongodb-service
+      - journey-redis-service
+      - journey-typesense-service
+    volumes: #mount to local file system
+      - ../docker-data/journal-cloud-data:/mnt/data
+    ports:
+      - 7070:7070
+  journey-sync-self-hosted-media:
+    image: journeycloud/journey-sync-self-hosted:0.1.0-alpha04
+    environment:
+      REDIS_PORT: 6379
+      DISABLE_SSL: NO
+      DOMAIN: mydomain.com
+      ROOT_MONGO_DB_URL: mongodb://root:password@journey-mongodb-service:27017
+      MONGO_DB_URL: mongodb://user:password@journey-mongodb-service:27017/journey
+      REDIS_URL: redis://journey-redis-service:6379
+      FS_PATH: /mnt/data
+    entrypoint: 'npm run launchMedia'
+    depends_on:
+      - journey-sync-self-hosted-service
+    volumes: #mount to local file system
+      - ../docker-data/journal-cloud-data:/mnt/data
+  journey-mongodb-service:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: journey
+    volumes:
+      - ../docker-data/mongodb:/data/db
+  journey-redis-service:
+    image: redis:7.2.4-alpine
+    volumes: #mount to local file system
+      - ../docker-data/redis:/data
+    command: redis-server
+  journey-typesense-service:
+    image: typesense/typesense:26.0
+    volumes: #mount to local file system
+      - ../docker-data/typesense:/data
+    command: '--data-dir /data --api-key=xyz --enable-cors'
+  nginx:
+    restart: always
+    image: nginx:1.27.1
+    ports:
+      - 443:443
+      - 80:80
+    volumes: #mount to local file system
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/mydomain.com.eu.conf:/etc/nginx/conf.d/mydomain.com.eu.conf:ro
+      - ./nginx/fullchain.pem:/etc/nginx/conf.d/mydomain.com/fullchain.pem:ro
+      - ./nginx/privkey.pem:/etc/nginx/conf.d/mydomain.com/privkey.pem:ro
